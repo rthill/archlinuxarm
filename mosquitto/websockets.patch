@@ -1,0 +1,12 @@
+--- a/config.mk   2015-12-21 12:45:41.000000000 +0100
++++ a/config.mk   2016-01-26 20:58:14.790266296 +0100
+@@ -65,7 +65,7 @@
+ WITH_UUID:=yes
+ 
+ # Build with websockets support on the broker.
+-WITH_WEBSOCKETS:=no
++WITH_WEBSOCKETS:=yes
+ 
+ # Use elliptic keys in broker
+ WITH_EC:=yes
+

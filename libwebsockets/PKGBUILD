@@ -1,0 +1,34 @@
+# Maintainer: Raoul Thill <raoul dot thill at gmail dot com>
+
+pkgname=libwebsockets
+_srcname=libwebsockets-1.6.0-chrome48-firefox42
+pkgver=1.6.0
+pkgrel=1
+pkgdesc="A lightweight pure C library built to use minimal CPU and memory resources, and provide fast throughput in both directions."
+arch=('i686' 'x86_64' 'armv6h' 'armv7h')
+url="https://libwebsockets.org"
+depends=('openssl' 'make')
+makedepends=('cmake')
+provides=('libwebsockets')
+license=('LGPL')
+source=("http://git.libwebsockets.org/cgi-bin/cgit/libwebsockets/snapshot/libwebsockets-1.6.0-chrome48-firefox42.tar.gz")
+sha256sums=('0b97d9f5f8a57fc3d34c17ac9e2bca578629ac407cca0f23b3491fda9bd6cba3')
+
+build() {
+  cd "${srcdir}/${_srcname}"
+  rm -rf build
+  mkdir build
+  cd build
+  cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+  make
+}
+
+package() {
+  cd "${srcdir}/${_srcname}/build"
+  make DESTDIR="${pkgdir}" install
+
+  cd ..
+  install -m755 -d "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/"
+  cd "$pkgdir/usr"
+}

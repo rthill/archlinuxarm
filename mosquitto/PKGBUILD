@@ -1,0 +1,48 @@
+# Maintainer: Raoul Thill <raoul dot thill at gmail dot com>
+
+pkgname=mosquitto
+pkgver=1.4.7
+pkgrel=1
+pkgdesc="An Open Source MQTT v3.1 Broker"
+arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
+url="http://mosquitto.org/"
+depends=('openssl' 'c-ares' 'libwebsockets')
+makedepends=('python' 'docbook-xsl' 'c-ares')
+conflicts=('mosquitto-hg')
+provides=('mosquitto')
+license=('BSD')
+source=("http://mosquitto.org/files/source/$pkgname-$pkgver.tar.gz"
+        "$pkgname.service"
+        "$pkgname.install"
+        "usr_move.patch"
+        "websockets.patch")
+
+install=$pkgname.install
+
+sha256sums=('71a1cb37893403e00b7db85c5db4af50b40d055ce61e5d21092c2594f2023b8b'
+            'b09c9852b5b438bad8dd54b3ac665bb0d05d1a9e4daf8c920956457c83622b64'
+            '09b8a17fc59f36f40ead4644fffc95458a9255c32d4848f39ceca05925dcc95b'
+            'c436bcc5a61d923ab36d5b3f24e5f628bf18ef14c2f351633d58ca983b5f655c'
+            '45d33b24c37ebfbe2ab134f42196949f35f9ee81d27b8db0d282037b21f300c9')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+  
+  patch -p1 < ../usr_move.patch
+  patch -p1 < ../websockets.patch
+
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make prefix=/usr DESTDIR="$pkgdir/" install
+
+  # systemd service file
+  install -Dm644 "$srcdir/$pkgname.service" "$pkgdir/usr/lib/systemd/system/$pkgname.service"
+  echo 'pid_file /run/mosquitto.pid' >> "$pkgdir/etc/mosquitto/mosquitto.conf.example"
+
+  # license files
+  install -Dm644 LICENSE.txt "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
