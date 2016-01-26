@@ -2,7 +2,7 @@
 
 pkgname=mosquitto
 pkgver=1.4.7
-pkgrel=1
+pkgrel=2
 pkgdesc="An Open Source MQTT v3.1 Broker"
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 url="http://mosquitto.org/"
@@ -20,7 +20,7 @@ source=("http://mosquitto.org/files/source/$pkgname-$pkgver.tar.gz"
 install=$pkgname.install
 
 sha256sums=('71a1cb37893403e00b7db85c5db4af50b40d055ce61e5d21092c2594f2023b8b'
-            'b09c9852b5b438bad8dd54b3ac665bb0d05d1a9e4daf8c920956457c83622b64'
+            '15c9de380944793e682e947d7d0d87756f0a6579249c96de1131d069edd6a9e9'
             '09b8a17fc59f36f40ead4644fffc95458a9255c32d4848f39ceca05925dcc95b'
             'c436bcc5a61d923ab36d5b3f24e5f628bf18ef14c2f351633d58ca983b5f655c'
             '45d33b24c37ebfbe2ab134f42196949f35f9ee81d27b8db0d282037b21f300c9')
